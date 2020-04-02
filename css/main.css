@@ -216,6 +216,13 @@ body{
     border-radius: 4px;
 }
 
+.card_popup .card__birthday,
+.card_popup .card__phone{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .card_popup .card__birthday{
     grid-row: 3;
     grid-column: 2;
@@ -321,7 +328,17 @@ a.card__friends{
 
 
     .card_popup{
-        grid-template-columns: 1fr 1fr 90px;
+        grid-template-columns: 2fr 3fr 90px;
         min-width: 0;
+    }
+}
+
+@media screen and (max-width: 359px){
+    .card_popup{
+        grid-template-columns: 2fr 3fr 10px;
+    }
+
+    .card_popup .card__img{
+        display: none;
     }
 }

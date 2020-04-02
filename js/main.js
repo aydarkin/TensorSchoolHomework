@@ -10,6 +10,7 @@ const showModal = function (event){
     let birthDay = document.querySelector('.card_popup .card__birthday:not(.card__birthday_label)');
     let phone = document.querySelector('.card_popup .card__phone:not(.card__phone_label)');
     let friends = document.querySelector('.card_popup .card__friends');
+    let photo = document.querySelector('.card_popup .card__img');
 
     lastSession.textContent = 'Был(-а) в сети '.concat(new Date(this.dataset.lastSession).toLocaleString());
     name.textContent = this.dataset.name;
@@ -17,18 +18,21 @@ const showModal = function (event){
     phone.textContent = this.dataset.phone;
     friends.textContent = 'Друзей '.concat(this.dataset.friendsCount);
 
+    photo.setAttribute('src', this.dataset.photo || "img/photo_placeholder.png");
+    photo.setAttribute('alt', 'Фото '.concat(this.dataset.name));
+
     for(let elem of [lastSession, name, birthDay, phone, friends]){
         elem.setAttribute('title', elem.textContent);
     }
 
-    let close = document.querySelector('.card_popup');
-    close.addEventListener('click', () => {
-        popup.classList.add('card_hide');
-    });
-
-    popup.style.top = event.pageY  + 'px';
-    popup.style.left = Math.min(event.pageX, window.innerWidth - popup.clientWidth - 20) + 'px';
     popup.classList.remove('card_hide');
+
+    let top = event.pageY - (popup.clientHeight / 3);
+    popup.style.top = (top < 0 ? 0 : top) + 'px';
+
+    let left = Math.min(event.pageX, window.innerWidth - popup.clientWidth - 10);
+    popup.style.left = (left < 0 ? 0 : left) + 'px';
+
     event.stopPropagation();
 };
 
@@ -38,7 +42,8 @@ const showModal = function (event){
  */
 const closeModal = function (event) {
     let popup = document.querySelector('.card_popup');
-    if(!popup.contains(event.target)){
+    let close = document.querySelector('.card_popup .card__close');
+    if(!popup.contains(event.target) || close.contains(event.target)){
         popup.classList.add('card_hide');
     }
 };
@@ -61,3 +66,6 @@ for(let person of persons){
 }
 
 document.body.addEventListener('click', closeModal);
+
+let close = document.querySelector('.card_popup .card__close');
+close.addEventListener('click', closeModal);
