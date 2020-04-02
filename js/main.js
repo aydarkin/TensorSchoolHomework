@@ -12,10 +12,10 @@ const showModal = function (event){
     let photo = document.querySelector('.card_popup .card__img');
 
     lastSession.textContent = 'Был(-а) в сети '.concat(new Date(this.dataset.lastSession).toLocaleString());
-    name.textContent = this.dataset.name;
-    birthDay.textContent = new Date(this.dataset.birth).toLocaleDateString();
-    phone.textContent = this.dataset.phone;
-    friends.textContent = 'Друзей '.concat(this.dataset.friendsCount);
+    name.textContent = this.dataset.name || "";
+    birthDay.textContent = this.dataset.birth && new Date(this.dataset.birth).toLocaleDateString() || "скрыто";
+    phone.textContent = this.dataset.phone || "";
+    friends.textContent = 'Друзей '.concat(this.dataset.friendsCount || "(скрыто)");
 
     photo.setAttribute('src', this.dataset.photo || "img/photo_placeholder.png");
     photo.setAttribute('alt', 'Фото '.concat(this.dataset.name));
